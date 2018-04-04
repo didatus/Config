@@ -37,6 +37,9 @@ class ConfigTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('Didatus', $name, "config value for key 'name' should be 'Didatus'");
     }
 
+    /**
+     * @covers ::__call
+     */
     public function testLevelTwoParam()
     {
         $config = new Config($this->dummyConfig);
@@ -45,6 +48,9 @@ class ConfigTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('test_database', $name, "config value for key 'database|name' should be 'test_database'");
     }
 
+    /**
+     * @covers ::__call
+     */
     public function testLevelThreeParam()
     {
         $config = new Config($this->dummyConfig);
@@ -53,6 +59,9 @@ class ConfigTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('localhost', $host, "config value for key 'logging|elk|host' should be 'localhost'");
     }
 
+    /**
+     * @covers ::__call
+     */
     public function testPartConfig()
     {
         $config = new Config($this->dummyConfig);
@@ -60,6 +69,26 @@ class ConfigTest extends PHPUnit_Framework_TestCase {
 
         $this->assertInstanceOf(Config::class, $databaseConfig, 'config part should of instance Config');
         $this->assertEquals('localhost', $databaseConfig->getHost(), 'host of database config should be "localhost"');
+    }
+
+    /**
+     * @covers ::__call
+     * @expectedException \BadMethodCallException
+     */
+    public function testCallWithoutGetThrowsException()
+    {
+        $config = new Config($this->dummyConfig);
+        $config->somethingInvalid();
+    }
+
+    /**
+     * @covers ::__call
+     * @expectedException \BadMethodCallException
+     */
+    public function testCallOnInvalidKeyThorwsException()
+    {
+        $config = new Config($this->dummyConfig);
+        $config->getDatabaseUser();
     }
 
 }
