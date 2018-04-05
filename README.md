@@ -20,5 +20,27 @@ $config = new Config(['foo' => 'bar']);
 $config->getFoo();
 ```
 
+#### Get a complex config value
+```php
+$config = new Config([
+  'package' => [
+    'name' => 'FooBar',
+    'description' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
+  ]
+]);
+$config->getPackageName();
+```
+
+#### Get config object of sub part
+```php
+$config = new Config([
+  'package' => [
+    'name' => 'FooBar',
+    'description' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
+  ]
+]);
+$packageConfig = $config->getPackageConfig();
+$packageConfig->getName();
+```
 
 C8H5
